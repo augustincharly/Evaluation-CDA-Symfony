@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du projet{% endblock %}
+
+{% block body %}
+<h1>Projet: {{project.name}}</h1>
+<div>
+	Créé le {{project.startedAt | date("d/m/Y")}}
+</div>
+<div>
+	Nombre de tâches: {{project.tasks | length}}
+</div>
+<div>
+	{% if project.status is same as('terminé') %}
+	statut: Terminé le {{project.endedAt | date('d/m/Y')}}
+	{% else %}
+	{{ form(project_status_form) }}
+	{% endif %}
+</div>
+<div>
+	{% if project.status is same as('terminé') %}
+	{% else %}
+	<a href="{{path('new_task',{'project_id': project.id})}}">Ajouter une tâche</a>
+	{% endif %}
+</div>
+<div>
+	<a href="{{path('projects')}}">Retour à la liste des projets</a>
+</div>
+<div>
+	<table>
+		<thead>
+			<th>Nom de la tâche</th>
+			<th>Description</th>
+			<th>Ajouté le</th>
+		</thead>
+		<tbody>
+			{% for task in project.tasks %}
+			<tr>
+				<td>{{task.title}}</td>
+				<td>{{task.description}}</td>
+				<td>{{task.createdAt | date("d/m/Y")}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}

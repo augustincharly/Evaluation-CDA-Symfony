@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des projets{% endblock %}
+
+{% block body %}
+<h1>Projets en cours</h1>
+<a href="{{path('new_project')}}">Ajouter un projet</a>
+
+
+<table>
+    <thead>
+        <th>Nom du projet</th>
+        <th>Statut</th>
+        <th>Tâche</th>
+        <th>Ajouté le</th>
+        <th>Actions</th>
+    </thead>
+    <tbody>
+        {% for project in projects %}
+        <tr>
+            <td>{{project.name}}</td>
+            <td>{{project.status}}</td>
+            <td>{{project.tasks | length}}</td>
+            <td>{{project.startedAt | date("d/m/Y")}}</td>
+            <td><a href="{{path('project',{'project_id': project.id})}}">Gérer</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
